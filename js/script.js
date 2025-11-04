@@ -149,9 +149,18 @@ function requestTick() {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize theme
+    initializeTheme();
+    watchSystemTheme();
+
     // Navigation toggle
     if (navToggle) {
         navToggle.addEventListener('click', toggleMobileMenu);
+    }
+
+    // Theme toggle
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
     }
 
     // Navigation links
