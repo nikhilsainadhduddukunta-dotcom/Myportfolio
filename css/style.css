@@ -84,6 +84,47 @@ body {
   background-color: var(--background-color);
   margin: 0;
   padding: 0;
+  transition: background-color var(--transition-smooth), color var(--transition-smooth);
+}
+
+/* Dark Mode Toggle Button */
+.theme-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: var(--accent-color);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-4);
+  transition: all var(--transition-smooth);
+  z-index: 1000;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-5);
+  background: var(--accent-hover);
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+  color: var(--text-on-accent);
+  transition: transform var(--transition-smooth);
+}
+
+.theme-toggle:hover svg {
+  transform: scale(1.1);
+}
+
+.theme-toggle:active {
+  transform: translateY(0);
 }
 
 /* Container */
