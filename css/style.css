@@ -367,12 +367,23 @@ section:nth-child(even) {
 }
 
 .tech-tag {
-  background-color: #e9ecef;
-  color: #495057;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
+  background: var(--section-background);
+  color: var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
   font-size: 0.875rem;
   font-weight: 500;
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-smooth);
+  display: inline-block;
+}
+
+.tech-tag:hover {
+  background: var(--accent-color);
+  color: var(--text-on-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+  border-color: var(--accent-color);
 }
 
 .project-links {
