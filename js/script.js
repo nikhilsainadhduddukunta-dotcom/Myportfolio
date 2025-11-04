@@ -315,6 +315,51 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Console welcome message
-console.log('%c👋 Welcome to my portfolio!', 'font-size: 16px; color: #007acc; font-weight: bold;');
-console.log('%cBuilt with HTML, CSS & JavaScript', 'font-size: 12px; color: #666;');
+// Enhanced floating animations
+function addFloatingEffects() {
+    // Add subtle floating animation to theme toggle
+    if (themeToggle) {
+        setInterval(() => {
+            if (!themeToggle.matches(':hover')) {
+                themeToggle.style.transform = `translateY(${Math.sin(Date.now() / 1000) * 3}px)`;
+            }
+        }, 50);
+    }
+}
+
+// Intersection Observer for advanced scroll animations
+function setupAdvancedAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+
+                // Add stagger effect to skill items
+                if (entry.target.classList.contains('skills-grid')) {
+                    const skillItems = entry.target.querySelectorAll('.skill-item');
+                    skillItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    });
+                }
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements
+    document.querySelectorAll('.project-card, .skills-grid, .about-content, .contact-content').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Console welcome message with theme info
+console.log('%c👋 Welcome to my portfolio!', 'font-size: 16px; color: #1a73e8; font-weight: bold;');
+console.log('%cBuilt with HTML, CSS & JavaScript', 'font-size: 12px; color: #5f6368;');
+console.log('%c💡 Press Ctrl/Cmd + Shift + D to toggle dark mode', 'font-size: 11px; color: #9aa0a6;');
