@@ -190,6 +190,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Escape' && navMenu.classList.contains('active')) {
             closeMobileMenu();
         }
+
+        // Toggle theme with Ctrl/Cmd + Shift + D
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'D') {
+            e.preventDefault();
+            toggleTheme();
+        }
     });
 });
 
