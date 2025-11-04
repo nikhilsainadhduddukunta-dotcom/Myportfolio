@@ -3,6 +3,9 @@ const navToggle = document.getElementById('nav-toggle');
 const navMenu = document.getElementById('nav-menu');
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('section');
+const themeToggle = document.getElementById('theme-toggle');
+const sunIcon = document.querySelector('.sun-icon');
+const moonIcon = document.querySelector('.moon-icon');
 
 // Mobile Navigation Toggle
 function toggleMobileMenu() {
@@ -64,6 +67,58 @@ function smoothScroll(e) {
     }
 }
 
+// Dark Mode Toggle
+function toggleTheme() {
+    const currentTheme = document.body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+
+    // Update icons
+    updateThemeIcons(newTheme);
+
+    // Track theme change
+    trackEvent('theme_toggle', { theme: newTheme });
+}
+
+// Update theme icons based on current theme
+function updateThemeIcons(theme) {
+    if (theme === 'dark') {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+    }
+}
+
+// Initialize theme on page load
+function initializeTheme() {
+    // Check for saved theme preference or default to light
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+
+    document.body.setAttribute('data-theme', theme);
+    updateThemeIcons(theme);
+}
+
+// Listen for system theme changes
+function watchSystemTheme() {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    mediaQuery.addEventListener('change', (e) => {
+        // Only change theme if user hasn't explicitly set one
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', newTheme);
+            updateThemeIcons(newTheme);
+        }
+    });
+}
+
 // Scroll Animations
 function handleScrollAnimations() {
     const elements = document.querySelectorAll('.project-card, .skills-grid, .about-content, .contact-content');
@@ -94,9 +149,18 @@ function requestTick() {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize theme
+    initializeTheme();
+    watchSystemTheme();
+
     // Navigation toggle
     if (navToggle) {
         navToggle.addEventListener('click', toggleMobileMenu);
+    }
+
+    // Theme toggle
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
     }
 
     // Navigation links
@@ -112,6 +176,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial animations
     handleScrollAnimations();
+    addFloatingEffects();
+    setupAdvancedAnimations();
 
     // Handle resize
     window.addEventListener('resize', function() {
@@ -125,6 +191,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && navMenu.classList.contains('active')) {
             closeMobileMenu();
+        }
+
+        // Toggle theme with Ctrl/Cmd + Shift + D
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'D') {
+            e.preventDefault();
+            toggleTheme();
         }
     });
 });
@@ -245,6 +317,51 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Console welcome message
-console.log('%c👋 Welcome to my portfolio!', 'font-size: 16px; color: #007acc; font-weight: bold;');
-console.log('%cBuilt with HTML, CSS & JavaScript', 'font-size: 12px; color: #666;');
+// Enhanced floating animations
+function addFloatingEffects() {
+    // Add subtle floating animation to theme toggle
+    if (themeToggle) {
+        setInterval(() => {
+            if (!themeToggle.matches(':hover')) {
+                themeToggle.style.transform = `translateY(${Math.sin(Date.now() / 1000) * 3}px)`;
+            }
+        }, 50);
+    }
+}
+
+// Intersection Observer for advanced scroll animations
+function setupAdvancedAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+
+                // Add stagger effect to skill items
+                if (entry.target.classList.contains('skills-grid')) {
+                    const skillItems = entry.target.querySelectorAll('.skill-item');
+                    skillItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    });
+                }
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements
+    document.querySelectorAll('.project-card, .skills-grid, .about-content, .contact-content').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Console welcome message with theme info
+console.log('%c👋 Welcome to my portfolio!', 'font-size: 16px; color: #1a73e8; font-weight: bold;');
+console.log('%cBuilt with HTML, CSS & JavaScript', 'font-size: 12px; color: #5f6368;');
+console.log('%c💡 Press Ctrl/Cmd + Shift + D to toggle dark mode', 'font-size: 11px; color: #9aa0a6;');

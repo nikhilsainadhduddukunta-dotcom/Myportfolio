@@ -19,12 +19,24 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Preconnect to Google Fonts (if using Inter) -->
+    <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-theme="light">
+    <!-- Dark Mode Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <!-- Sun Icon (for light mode) -->
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: block;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <!-- Moon Icon (for dark mode) -->
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+
     <!-- Header Navigation -->
     <header>
         <nav class="container">
@@ -152,10 +164,10 @@
                     <div class="skills-category">
                         <h3>Primary Skills</h3>
                         <div class="skills-grid">
-                            <div class="skill-item">React</div>
-                            <div class="skill-item">Node.js</div>
-                            <div class="skill-item">JavaScript</div>
-                            <div class="skill-item">TypeScript</div>
+                            <div class="skill-item"><span>React</span></div>
+                            <div class="skill-item"><span>Node.js</span></div>
+                            <div class="skill-item"><span>JavaScript</span></div>
+                            <div class="skill-item"><span>TypeScript</span></div>
                         </div>
                     </div>
 
@@ -163,14 +175,14 @@
                     <div class="skills-category">
                         <h3>Additional Skills</h3>
                         <div class="skills-grid">
-                            <div class="skill-item">PostgreSQL</div>
-                            <div class="skill-item">MongoDB</div>
-                            <div class="skill-item">Git</div>
-                            <div class="skill-item">Docker</div>
-                            <div class="skill-item">AWS</div>
-                            <div class="skill-item">REST APIs</div>
-                            <div class="skill-item">GraphQL</div>
-                            <div class="skill-item">Tailwind CSS</div>
+                            <div class="skill-item"><span>PostgreSQL</span></div>
+                            <div class="skill-item"><span>MongoDB</span></div>
+                            <div class="skill-item"><span>Git</span></div>
+                            <div class="skill-item"><span>Docker</span></div>
+                            <div class="skill-item"><span>AWS</span></div>
+                            <div class="skill-item"><span>REST APIs</span></div>
+                            <div class="skill-item"><span>GraphQL</span></div>
+                            <div class="skill-item"><span>Tailwind CSS</span></div>
                         </div>
                     </div>
                 </div>
