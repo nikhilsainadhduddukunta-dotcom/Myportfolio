@@ -176,6 +176,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial animations
     handleScrollAnimations();
+    addFloatingEffects();
+    setupAdvancedAnimations();
 
     // Handle resize
     window.addEventListener('resize', function() {
