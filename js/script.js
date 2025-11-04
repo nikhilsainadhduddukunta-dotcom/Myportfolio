@@ -67,6 +67,58 @@ function smoothScroll(e) {
     }
 }
 
+// Dark Mode Toggle
+function toggleTheme() {
+    const currentTheme = document.body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+
+    // Update icons
+    updateThemeIcons(newTheme);
+
+    // Track theme change
+    trackEvent('theme_toggle', { theme: newTheme });
+}
+
+// Update theme icons based on current theme
+function updateThemeIcons(theme) {
+    if (theme === 'dark') {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+    }
+}
+
+// Initialize theme on page load
+function initializeTheme() {
+    // Check for saved theme preference or default to light
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+
+    document.body.setAttribute('data-theme', theme);
+    updateThemeIcons(theme);
+}
+
+// Listen for system theme changes
+function watchSystemTheme() {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    mediaQuery.addEventListener('change', (e) => {
+        // Only change theme if user hasn't explicitly set one
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', newTheme);
+            updateThemeIcons(newTheme);
+        }
+    });
+}
+
 // Scroll Animations
 function handleScrollAnimations() {
     const elements = document.querySelectorAll('.project-card, .skills-grid, .about-content, .contact-content');
